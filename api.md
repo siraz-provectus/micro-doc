@@ -54,12 +54,14 @@
         {
             "id": 1,
             "name": "airnanny",
-            "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt"
+            "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt",
+            "firmware_version": "v1.3"
         },
         {
             "id": 2,
             "name": "airnanny_dev",
-            "file_url": "http://microclimatic.ru/uploads/projects/2/updates.txt"
+            "file_url": "http://microclimatic.ru/uploads/projects/2/updates.txt",
+            "firmware_version": "v1.0"
         }
     ]
 
@@ -80,7 +82,8 @@
     {
         "id": 1,
         "name": "airnanny",
-        "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt"
+        "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt",
+        "firmware_version": "v1.3"
     }
 
 ### создать проект
@@ -98,14 +101,16 @@
     params:
 
     name: 'airnanny_new'       # название проекта (обязательное поле)
-    file: file                 # file прошивки
+    file: file                 # file прошивки (обязательное поле)
+    firmware_version: 'v1.4'   # версия прошивки (обязательное поле)
 
   Response:
 
     {
         "id": 3,
         "name": "airnanny_new",
-        "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt"
+        "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt",
+        "firmware_version": "v1.4"
     }
 
 ### обновить проект
@@ -122,14 +127,16 @@
 
     params:
 
-    file: file                 # file прошивки
+    file: file                 # file прошивки (обязательное поле)
+    firmware_version: 'v1.5'   # версия прошивки (обязательное поле)
 
   Response:
 
     {
         "id": 3,
         "name": "airnanny_new",
-        "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt"
+        "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt",
+        "firmware_version": "v1.5"
     }
 
 ### Удалиить проект
