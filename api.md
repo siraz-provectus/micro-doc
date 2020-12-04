@@ -4,12 +4,10 @@
 
 - [Данные передаваемые в заголовках (Headers) API](#%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D0%B2%D0%B0%D0%B5%D0%BC%D1%8B%D0%B5-%D0%B2-%D0%B7%D0%B0%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BA%D0%B0%D1%85-headers-api)
 - [Ошибки](#%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%B8)
-- [Проекты](#%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B)
-  - [Список проектов](#%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BE%D0%B2)
-  - [отдельный проект](#%D0%BE%D1%82%D0%B4%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82)
-  - [создать проект](#%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82)
-  - [обновить проект](#%D0%BE%D0%B1%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82)
-  - [Удалиить проект](#%D1%83%D0%B4%D0%B0%D0%BB%D0%B8%D0%B8%D1%82%D1%8C-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82)
+- [Датчик](#%D0%B4%D0%B0%D1%82%D1%87%D0%B8%D0%BA)
+  - [Записать данные датчика](#%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D0%B4%D0%B0%D1%82%D1%87%D0%B8%D0%BA%D0%B0)
+- [Прошивка](#%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B0)
+  - [Скачать прошивку](#%D1%81%D0%BA%D0%B0%D1%87%D0%B0%D1%82%D1%8C-%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D1%83)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -34,60 +32,10 @@
       }
     }
 
-## Проекты
+## Датчик
 
-### Список проектов
-  url: `http://microclimatic.ru/api/projects`
-  method: GET
-
-  Request:
-
-    headers:
-
-      Content-Type: "application/json"
-      Accept:   "application/json"
-      Authorization:  "Bearer Token"
-
-  Response:
-
-    [
-        {
-            "id": 1,
-            "name": "airnanny",
-            "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt",
-            "firmware_version": "v1.3"
-        },
-        {
-            "id": 2,
-            "name": "airnanny_dev",
-            "file_url": "http://microclimatic.ru/uploads/projects/2/updates.txt",
-            "firmware_version": "v1.0"
-        }
-    ]
-
-### отдельный проект
-  url: `http://microclimatic.ru/api/projects/airnanny`
-  method: GET
-
-  Request:
-
-    headers:
-
-      Content-Type: "application/json"
-      Accept:   "application/json"
-      Authorization:  "Bearer Token"
-
-  Response:
-
-    {
-        "id": 1,
-        "name": "airnanny",
-        "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt",
-        "firmware_version": "v1.3"
-    }
-
-### создать проект
-  url: `http://microclimatic.ru/api/projects`
+### Записать данные датчика
+  url: `http://134.0.118.202/api/sensor_data`
   method: POST
 
   Request:
@@ -100,22 +48,23 @@
 
     params:
 
-    name: 'airnanny_new'       # название проекта (обязательное поле)
-    file: file                 # file прошивки (обязательное поле)
-    firmware_version: 'v1.4'   # версия прошивки (обязательное поле)
+      uid:              '63727tgsg89'        # ID датчика (обязательное поле)
+      temperature:      25.5                 # температура (обязательное поле)
+      moisture:         73                   # влажность (обязательное поле)
+      date:             2020-03-03T14:08:16  # дата и время (обязательное поле)
+      firmware_version: 'v1.2.1'             # версия прошивки датчика (необязательное поле, если отсутствует то считаем что версия актуальная)
 
   Response:
 
-    {
-        "id": 3,
-        "name": "airnanny_new",
-        "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt",
-        "firmware_version": "v1.4"
-    }
+    { "message": "OK" } || { "message": "need_update", "firmware_version": "1.0.1" }
 
-### обновить проект
-  url: `http://microclimatic.ru/api/projects/airnanny_new`
-  method: PUT
+##  Прошивка
+
+### Скачать прошивку
+  url: `http://134.0.118.202/api/firmwares/:firmware_type`
+  method: GET
+
+  firmware_types = [sensor]
 
   Request:
 
@@ -125,33 +74,6 @@
       Accept:   "application/json"
       Authorization:  "Bearer Token"
 
-    params:
-
-    file: file                 # file прошивки (обязательное поле)
-    firmware_version: 'v1.5'   # версия прошивки (обязательное поле)
-
   Response:
 
-    {
-        "id": 3,
-        "name": "airnanny_new",
-        "file_url": "http://microclimatic.ru/uploads/projects/1/updates.txt",
-        "firmware_version": "v1.5"
-    }
-
-### Удалиить проект
-  url: `http://microclimatic.ru/api/projects/airnanny_new`
-  method: PUT
-
-  Request:
-
-    headers:
-
-      Content-Type: "application/json"
-      Accept:   "application/json"
-      Authorization:  "Bearer Token"
-
-
-  Response:
-
-    { message: 'Проект удален'}
+    file
